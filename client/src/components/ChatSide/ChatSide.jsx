@@ -17,7 +17,7 @@ const ChatSide = () => {
   const scrollRef = useRef();
 
   useEffect(() => {
-    socket = io("http://localhost:8000")
+    socket = io(import.meta.env.VITE_SERVER_SOCKET)
     socket.emit("add-user", user._id);
   }, [user]);
 
