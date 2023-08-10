@@ -1,0 +1,32 @@
+.message {
+  height: auto;
+  max-width: 90%;
+  padding: 5px 10px;
+  display: flex;
+  flex-direction: column;
+  color: white;
+}
+
+.message-outgoing {
+  background-color: var(--blue);
+  border-radius: 12px 12px 0 12px;
+  align-self: flex-end;
+  margin-right: 1rem;
+}
+
+.message-incomming {
+  background-color: #4a4e60;
+  border-radius: 0 12px 12px 12px;
+  align-self: flex-start;
+  margin-left: 1rem;
+}
+
+.message >:nth-child(1){
+  font-size: 1.1rem;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.message >:nth-child(2) {
+  align-self: flex-end;
+  font-size: 0.8rem;
+}
