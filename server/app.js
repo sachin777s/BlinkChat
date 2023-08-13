@@ -18,7 +18,7 @@ const app = express();
 app.use(
   cors({
     credentials: true,
-    origin: process.env.CLIENT_URL,
+    origin: "https://blinkchats.netlify.app/",
   })
 );
 app.use(express.json());
