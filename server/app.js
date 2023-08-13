@@ -16,7 +16,7 @@ const app = express();
 
 /* Middlewares */
 app.use((req, res, next) => {
-  res.setHeader('Access-Control-Allow-Origin', 'https://blinkchats.netlify.app/'); 
+  res.setHeader('Access-Control-Allow-Origin', 'https://blinkchats.netlify.app'); 
   res.setHeader('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE');
   res.setHeader('Access-Control-Allow-Headers', 'Content-Type, Authorization');
   next();
@@ -25,7 +25,7 @@ app.use((req, res, next) => {
 app.use(
   cors({
     credentials: true,
-    origin: "https://blinkchats.netlify.app/",
+    origin: "https://blinkchats.netlify.app",
   })
 );
 app.use(express.json());
