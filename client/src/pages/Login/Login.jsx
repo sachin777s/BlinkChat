@@ -18,7 +18,7 @@ const Login = () => {
     e.preventDefault();
     try {
       dispatch(loginStart())
-      const res = await API.post("/auth/login", { mob, password });
+      const res = await API.post("/auth/login", { mob, password }, { withCredentials: true });
       if (res.status = '201') {
         dispatch(loginSuccess(res.data.user));
         navigate("/chat");
