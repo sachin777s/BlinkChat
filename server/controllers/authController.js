@@ -34,15 +34,16 @@ export const registerUser = async (req, res) => {
     const token = jwt.sign({ userId: savedUser._id }, process.env.JWT_KEY, {
       expiresIn: "90d",
     });
-    res
-      .status(201)
+    
+    res.
       .cookie("blink_token", token, {
          expires: new Date(Date.now() + 90 * 24 * 3600000), //Cookies Expiration Date for 90 days
          httpOnly: true,
          sameSite: 'none',
          secure: true
-      })
-      .json({
+      });
+    
+    res.status(201).json({
         message: "Registration SuccessFully",
         user: savedUser,
       });
