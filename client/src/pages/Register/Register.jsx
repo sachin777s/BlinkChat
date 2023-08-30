@@ -31,7 +31,7 @@ const Register = () => {
     e.preventDefault();
     try {
       dispatch(loginStart());
-      const res = await API.post("/auth/register", user);
+      const res = await API.post("/auth/register", user, { withCredentials: true });
       if (res.status = '201') {
         dispatch(loginSuccess(res.data.user));
         navigate("/chat");
