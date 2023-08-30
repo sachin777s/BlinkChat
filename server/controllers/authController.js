@@ -37,8 +37,10 @@ export const registerUser = async (req, res) => {
     res
       .status(201)
       .cookie("blink_token", token, {
-        // expires: new Date(Date.now() + 90 * 24 * 3600000), //Cookies Expiration Date for 90 days
-        httpOnly: false,
+         expires: new Date(Date.now() + 90 * 24 * 3600000), //Cookies Expiration Date for 90 days
+         httpOnly: true,
+         sameSite: 'none',
+         secure: true
       })
       .json({
         message: "Registration SuccessFully",
@@ -72,7 +74,9 @@ export const loginUser = async (req, res) => {
       );
       res.cookie("blink_token", token, {
         expires: new Date(Date.now() + 90 * 24 * 3600000), //Cookies Expiration Date for 90 days
-        httpOnly: false,
+         httpOnly: true,
+         sameSite: 'none',
+         secure: true,
       });
       res.status(201).json({
         message: "Login Successfully",
