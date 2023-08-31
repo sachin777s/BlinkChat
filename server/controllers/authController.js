@@ -35,8 +35,7 @@ export const registerUser = async (req, res) => {
       expiresIn: "90d",
     });
     
-    res.
-      .cookie("blink_token", token, {
+    res.cookie("blink_token", token, {
          expires: new Date(Date.now() + 90 * 24 * 3600000), //Cookies Expiration Date for 90 days
          httpOnly: true,
          sameSite: 'none',
