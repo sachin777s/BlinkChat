@@ -34,7 +34,7 @@ export const registerUser = async (req, res) => {
     const token = jwt.sign({ userId: savedUser._id }, process.env.JWT_KEY, {
       expiresIn: "90d",
     });
-    
+    console.log(token);
     res.cookie("blink_token", token, {
          expires: new Date(Date.now() + 90 * 24 * 3600000), //Cookies Expiration Date for 90 days
          httpOnly: true,
