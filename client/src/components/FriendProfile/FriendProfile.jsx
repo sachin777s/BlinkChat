@@ -5,6 +5,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import API from '../../api'
 import { removeContact } from '../../redux/slices/contactSlice'
 import ProfilePic from "../../img/profile.png"
+import toast from "react-hot-toast";
 
 const FriendProfile = ({ setIsOpen }) => {
     const dispatch = useDispatch();
@@ -16,7 +17,7 @@ const FriendProfile = ({ setIsOpen }) => {
     const handleRemoveContact = async () => {
         const res = await API.delete(`/user/contact/${user._id}?contactId=${contact._id}`);
         if (res.status = '200') {
-            window.alert("Contact Removed!");
+            toast.success(`${contact.mob} is Removed Succeefully`)
             dispatch(removeContact())
         }
         setIsOpen(false);

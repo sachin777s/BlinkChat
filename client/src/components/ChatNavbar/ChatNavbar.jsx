@@ -8,6 +8,7 @@ import { useDispatch, useSelector } from 'react-redux'
 import API from '../../api'
 import { removeContact } from '../../redux/slices/contactSlice'
 import Profile from "../../img/profile.png"
+import toast from 'react-hot-toast'
 
 const ChatNavbar = ({ setMessages }) => {
     const dispatch = useDispatch();
@@ -23,7 +24,7 @@ const ChatNavbar = ({ setMessages }) => {
     const handleRemoveContact = async () => {
         const res = await API.delete(`/user/contact/${user._id}?contactId=${chatContact._id}`);
         if (res.status = '200') {
-            window.alert("Contact Removed!");
+            toast.success(`${chatContact.mob} is removed successfully`)
             dispatch(removeContact())
         }
         setIsDropExpend(false);
@@ -33,7 +34,7 @@ const ChatNavbar = ({ setMessages }) => {
         const res = await API.delete(`/message/${user._id}?contactId=${chatContact._id}`);
         if (res.status = '200') {
             setMessages([]);
-            window.alert("Chats Cleared!");
+            toast.success("Chats cleared successfully");
         }
         setIsDropExpend(false);
     }

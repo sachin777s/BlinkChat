@@ -6,6 +6,7 @@ import Register from "./pages/Register/Register"
 import ChatPage from "./pages/ChatPage/ChatPage"
 import NotFound from './pages/NotFound/NotFound'
 import { useSelector } from 'react-redux';
+import { Toaster } from "react-hot-toast"
 
 function App() {
 
@@ -19,6 +20,7 @@ function App() {
         <Route path='/register' element={user ? <Navigate to="/chat" /> : < Register />} />
         <Route path='/chat' element={user ? < ChatPage /> : <Navigate to="/login" />} />
       </Routes>
+      <Toaster />
     </div>
   )
 }

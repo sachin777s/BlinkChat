@@ -5,6 +5,7 @@ import API from '../../api';
 import { addContact, contactFetchingStart } from '../../redux/slices/contactSlice';
 import { loginSuccess } from '../../redux/slices/userSlice';
 import "./AddFriend.css";
+import toast from 'react-hot-toast';
 
 const AddFriend = ({ isOpen, setIsOpen }) => {
     const dispatch = useDispatch();
@@ -13,13 +14,24 @@ const AddFriend = ({ isOpen, setIsOpen }) => {
 
     const handleSubmit = async (e) => {
         e.preventDefault();
-        dispatch(contactFetchingStart());
-        const res = await API.put(`/user/contact/${user._id}`, { mob });
-        if (res.status === '200') {
-            dispatch(loginSuccess(res.data.updatedUser));
-            dispatch(addContact(res.data.contactExist));
-            setIsOpen(false);
-            setMobError(false);
+        try {
+            dispatch(contactFetchingStart());
+            const res = await API.put(`/user/contact/${user._id}`, { mob });
+            if (res.status === 200) {
+                toast.success(`${res.data.contactExist.mob} Added Successfully`)
+                dispatch(loginSuccess(res.data.updatedUser));
+                dispatch(addContact(res.data.contactExist));
+                setIsOpen(false);
+                setMobError(false);
+            }
+        } catch (err) {
+            console.log("This is custom error in Add friends request");
+            if (err.response.status === 408) {
+                toast.error(err.response.data)
+            }
+            if (err.response.status === 405) {
+                toast.error(err.response.data)
+            }
         }
     }
 

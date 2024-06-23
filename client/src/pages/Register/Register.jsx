@@ -6,6 +6,7 @@ import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
 import { loginStart, loginSuccess, loginFail } from "../../redux/slices/userSlice"
 import Loader from "../../img/loader.png"
+import toast from 'react-hot-toast';
 
 const Register = () => {
 
@@ -29,15 +30,23 @@ const Register = () => {
   /* Handle Submit Event */
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if (!user.name) return toast.error("Name is required");
+    if (!user.email) return toast.error("Email is required");
+    if (!user.password) return toast.error("Password is required");
+    if (user.mob.length < 10) return toast.error("Invalid Mobile Number")
+    if (user.password !== user.cpassword) return toast.error("Password doesn't matched");
+
     try {
       dispatch(loginStart());
       const res = await API.post("/auth/register", user, { withCredentials: true });
       if (res.status = '201') {
         dispatch(loginSuccess(res.data.user));
         navigate("/chat");
+        toast.success("Registered Successfully")
       }
     } catch (error) {
       dispatch(loginFail())
+      toast.error("Registration Failed")
     }
   }
 

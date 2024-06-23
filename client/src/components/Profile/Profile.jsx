@@ -5,6 +5,7 @@ import { useNavigate } from "react-router-dom"
 import API from '../../api';
 import { loginFail, loginStart, loginSuccess, logout } from '../../redux/slices/userSlice';
 import ProfilePic from "../../img/profile.png"
+import toast from 'react-hot-toast';
 
 const Profile = ({ isOpen, setIsOpen }) => {
   const navigate = useNavigate();
@@ -25,18 +26,18 @@ const Profile = ({ isOpen, setIsOpen }) => {
     setData({ ...data, [e.target.name]: e.target.value });
   }
 
-  const fileChange = async(e) => {
-    console.log(e.target.files[0])
+  const fileChange = async (e) => {
     setProfileImgView(URL.createObjectURL(e.target.files[0]));
     const filename = `${e.target.files[0].name}_${Date.now()}`;
-    const res = await API.put(`/user/${user._id}`, {profileImg: filename});
+    const res = await API.put(`/user/${user._id}`, { profileImg: filename });
     if (res.status = '200') {
       dispatch(loginSuccess(res.data));
     }
     const formData = new FormData();
-    formData.append("filename",filename);
-    formData.append("profileImg",e.target.files[0]);
-    await API.post("/uploadPic",formData);
+    formData.append("filename", filename);
+    formData.append("profileImg", e.target.files[0]);
+    await API.post("/uploadPic", formData);
+    toast.success("Profile Picture Updated")
   }
 
   const handleUpdate = async (e) => {
@@ -47,16 +48,19 @@ const Profile = ({ isOpen, setIsOpen }) => {
       console.log(res)
       if (res.status = '200') {
         dispatch(loginSuccess(res.data))
+        toast.success("Profile Updated Successfully")
         setIsOpen(false);
       }
     } catch (err) {
       loginFail();
+      toast.error("Something went wrong");
     }
   }
 
   const handleLogout = () => {
     dispatch(logout());
     navigate("/login");
+    toast.success("Logged Out Successfully")
   }
 
   const handleDeleteAccount = async () => {
@@ -73,7 +77,7 @@ const Profile = ({ isOpen, setIsOpen }) => {
       <div className="p-container">
         <form action="" className='p-form'>
           <label htmlFor="profile-input" className='profilePictureLabel'>
-            <img src={profileImgView?profileImgView:user.profileImg?serverPublic+user.profileImg:ProfilePic} alt="" className="profile-picture" />
+            <img src={profileImgView ? profileImgView : user.profileImg ? serverPublic + user.profileImg : ProfilePic} alt="" className="profile-picture" />
           </label>
           <input onChange={fileChange} type="file" id="profile-input" name='profileImg' />
           <input onChange={handleChange} value={data.name} type="text" name='name' />
