@@ -14,19 +14,11 @@ const PORT = process.env.PORT || 8000;
 env.config();
 const app = express();
 
-app.use(function(req, res, next) {
-  res.header('Access-Control-Allow-Credentials', true);
-  res.header('Access-Control-Allow-Origin', "https://blinkchats.netlify.app");
-  res.header('Access-Control-Allow-Methods', 'GET,PUT,POST,DELETE,UPDATE,OPTIONS');
-  res.header('Access-Control-Allow-Headers', 'X-Requested-With, X-HTTP-Method-Override, Content-Type, Accept');
-  next();
-});
-
 /* Middlewares */
 app.use(
   cors({
+    origin: "http://localhost:5173",
     credentials: true,
-    origin: "https://blinkchats.netlify.app",
   })
 );
 app.use(express.json());
@@ -35,6 +27,13 @@ app.use(cookieParser());
 //TO serve images for public
 app.use(express.static("public"));
 app.use("/images", express.static("images"));
+
+// For not stoting chache
+app.use((req, res, next) => {
+  res.set('Cache-Control', 'no-store');
+  next();
+});
+
 
 /* Mongoose Connection */
 mongoose

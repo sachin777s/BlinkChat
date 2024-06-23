@@ -49,12 +49,12 @@ export const addContact = async (req, res) => {
     }
     const contactExist = await User.findOne({ mob: req.body.mob });
     if (!contactExist) {
-      return res.status(400).json("Contact Not Available!");
+      return res.status(408).json(`${req.body.mob} isn't using Blinkchat`);
     }
     const user = await User.findById(req.params.id);
 
     if(user.contacts.includes(contactExist._id)){
-      return res.status(505).json("It is already avaible in your contacts");
+      return res.status(405).json(`${req.body.mob} is already avaible in your contacts`);
     }
     
     if (user.mob === contactExist.mob) {

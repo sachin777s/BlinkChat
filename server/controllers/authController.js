@@ -36,16 +36,16 @@ export const registerUser = async (req, res) => {
     });
     console.log(token);
     res.cookie("blink_token", token, {
-         expires: new Date(Date.now() + 90 * 24 * 3600000), //Cookies Expiration Date for 90 days
-         httpOnly: true,
-         sameSite: 'none',
-         secure: true
-      });
-    
+      expires: new Date(Date.now() + 90 * 24 * 3600000), //Cookies Expiration Date for 90 days
+      httpOnly: true,
+      sameSite: 'none',
+      secure: true
+    });
+
     res.status(201).json({
-        message: "Registration SuccessFully",
-        user: savedUser,
-      });
+      message: "Registration SuccessFully",
+      user: savedUser,
+    });
   } catch (err) {
     res.status(500).json(err);
   }
@@ -60,7 +60,7 @@ export const loginUser = async (req, res) => {
     }
     const user = await User.findOne({ mob: mob });
     if (!user) {
-      return res.status(500).json("Wrong Credentials");
+      return res.status(502).json("Wrong Mobile Number");
     }
     const isPasswordValid = bcrypt.compareSync(password, user.password);
     if (isPasswordValid) {
@@ -74,9 +74,9 @@ export const loginUser = async (req, res) => {
       );
       res.cookie("blink_token", token, {
         expires: new Date(Date.now() + 90 * 24 * 3600000), //Cookies Expiration Date for 90 days
-         httpOnly: true,
-         sameSite: 'none',
-         secure: true,
+        httpOnly: true,
+        sameSite: 'none',
+        secure: true,
       });
       res.status(201).json({
         message: "Login Successfully",
